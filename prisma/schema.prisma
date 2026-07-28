@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String?
+  image     String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  products  Product[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String?
+  image       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  products    Product[]
+}
+
+model Product {
+  id              String   @id @default(cuid())
+  title           String
+  slug            String   @unique
+  description     String   @db.Text
+  price           Float
+  discountPrice   Float?
+  inventory       Int      @default(0)
+  images          String[] // Array of Cloudinary image URLs
+  
+  // SEO Metadata
+  metaTitle       String?
+  metaDescription String?  @db.Text
+  
+  published       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  authorId        String
+  author          User     @relation(fields: [authorId], references: [id])
+  categoryId      String
+  category        Category @relation(fields: [categoryId], references: [id])
+}
