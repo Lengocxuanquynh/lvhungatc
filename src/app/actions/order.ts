@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 interface CreateOrderInput {
   customerName: string;
@@ -19,6 +20,20 @@ export async function createOrder(input: CreateOrderInput) {
 
     if (!items || items.length === 0) {
       throw new Error("Giỏ hàng trống.");
+    }
+
+    let customerEmail = input.customerEmail;
+    const cookieStore = await cookies();
+    const userId = cookieStore.get("user_session")?.value || cookieStore.get("admin_session")?.value;
+
+    if (userId) {
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { email: true }
+      });
+      if (user) {
+        customerEmail = user.email;
+      }
     }
 
     const totalAmount = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
