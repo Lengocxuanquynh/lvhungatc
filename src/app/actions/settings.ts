@@ -116,8 +116,7 @@ export async function updateSiteSettingsAction(formData: FormData) {
       }
     });
 
-    revalidatePath("/");
-    revalidatePath("/dashboard/settings");
+    revalidatePath("/", "layout");
     
     return { success: true };
   } catch (error: any) {
