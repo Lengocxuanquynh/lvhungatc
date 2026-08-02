@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
       default: `${siteName} | Thư viện CAD & Khóa học Thực chiến`,
       template: `%s | ${siteName}`
     },
-    description: "Khám phá các khóa học thực chiến, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.",
+    description: "Khám phá các công cụ triển khai nhanh, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.",
     keywords: ["thư viện cad", "khóa học autocad", "autocad m&e", "lisp cad", "thiết kế kiến trúc", "bản vẽ kỹ thuật"],
     authors: [{ name: siteName }],
     creator: siteName,
@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
       url: "https://lvhungatc.vercel.app",
       siteName: siteName,
       title: `${siteName} | Thư viện CAD & Khóa học Thực chiến`,
-      description: "Khám phá các khóa học thực chiến, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.",
+      description: "Khám phá các công cụ triển khai nhanh, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.",
       images: [
         {
           url: settings.heroImage || "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1200", // architectural fallback image
@@ -37,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       title: `${siteName} | Thư viện CAD & Khóa học Thực chiến`,
-      description: "Khám phá các khóa học thực chiến, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.",
+      description: "Khám phá các công cụ triển khai nhanh, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.",
       images: [settings.heroImage || "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1200"],
     },
     robots: {

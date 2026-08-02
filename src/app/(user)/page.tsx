@@ -39,8 +39,8 @@ export default async function HomePage() {
             <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 leading-tight mb-6">
               NÂNG TẦM <br /> BẢN VẼ
             </h1>
-            <p className="text-lg text-slate-600 mb-8 max-w-md ml-auto">
-              Khám phá các khóa học thực chiến, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.
+            <p className="text-xl md:text-2xl text-slate-600 mb-10 font-light leading-relaxed">
+              Khám phá các công cụ triển khai nhanh, thư viện CAD <br className="hidden md:block" /> khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa <br className="hidden md:block" /> 100% hiệu suất thiết kế.
             </p>
 
           </div>
