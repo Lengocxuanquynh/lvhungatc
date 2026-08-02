@@ -9,10 +9,19 @@ export const metadata = {
 };
 
 export default async function ProductsPage(props: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; category?: string }>;
 }) {
   const searchParams = await props.searchParams;
   const q = searchParams?.q || "";
+  const categoryParam = searchParams?.category || "";
+
+  let categoryName = "";
+  if (categoryParam) {
+    const category = await prisma.category.findUnique({
+      where: { slug: categoryParam }
+    });
+    if (category) categoryName = category.name;
+  }
 
   const products = await prisma.product.findMany({
     where: {
@@ -21,6 +30,11 @@ export default async function ProductsPage(props: {
         title: {
           contains: q,
           mode: "insensitive"
+        }
+      } : {}),
+      ...(categoryParam ? {
+        category: {
+          slug: categoryParam
         }
       } : {})
     },
@@ -32,7 +46,7 @@ export default async function ProductsPage(props: {
     <div className="container mx-auto px-4 py-12 max-w-7xl">
       <div className="mb-10">
         <h1 className="text-3xl font-bold text-slate-900">
-          {q ? `Kết quả tìm kiếm cho: "${q}"` : "Tất cả sản phẩm"}
+          {q ? `Kết quả tìm kiếm cho: "${q}"` : categoryName ? `Danh mục: ${categoryName}` : "Tất cả sản phẩm"}
         </h1>
         <p className="text-slate-500 mt-2">
           {products.length} sản phẩm được tìm thấy
