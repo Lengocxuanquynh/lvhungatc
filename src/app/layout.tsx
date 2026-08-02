@@ -11,23 +11,23 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: {
-      default: `${siteName} | Hàng Hiệu Chính Hãng`,
+      default: `${siteName} | Thư viện CAD & Khóa học Thực chiến`,
       template: `%s | ${siteName}`
     },
-    description: "Trải nghiệm mua sắm trực tuyến hàng đầu với các sản phẩm thời trang, công nghệ và phụ kiện cao cấp chính hãng.",
-    keywords: ["thời trang cao cấp", "đồ công nghệ", "phụ kiện", "mua sắm trực tuyến", "hàng hiệu"],
+    description: "Khám phá các khóa học thực chiến, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.",
+    keywords: ["thư viện cad", "khóa học autocad", "autocad m&e", "lisp cad", "thiết kế kiến trúc", "bản vẽ kỹ thuật"],
     authors: [{ name: siteName }],
     creator: siteName,
     openGraph: {
       type: "website",
       locale: "vi_VN",
-      url: "https://lvhungatc.com",
+      url: "https://lvhungatc.vercel.app",
       siteName: siteName,
-      title: `${siteName} | Mua Sắm Hàng Hiệu Đẳng Cấp`,
-      description: "Nơi tôn vinh phong cách cá nhân của bạn với những bộ sưu tập thời thượng nhất.",
+      title: `${siteName} | Thư viện CAD & Khóa học Thực chiến`,
+      description: "Khám phá các khóa học thực chiến, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.",
       images: [
         {
-          url: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1200",
+          url: settings.heroImage || "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1200", // architectural fallback image
           width: 1200,
           height: 630,
           alt: `${siteName} Banner`,
@@ -36,9 +36,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${siteName} | Mua Sắm Hàng Hiệu Đẳng Cấp`,
-      description: "Nơi tôn vinh phong cách cá nhân của bạn với những bộ sưu tập thời thượng nhất.",
-      images: ["https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=1200"],
+      title: `${siteName} | Thư viện CAD & Khóa học Thực chiến`,
+      description: "Khám phá các khóa học thực chiến, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.",
+      images: [settings.heroImage || "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1200"],
     },
     robots: {
       index: true,
