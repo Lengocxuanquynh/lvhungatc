@@ -35,7 +35,7 @@ export default async function HomePage() {
         
         <div className="container relative z-10 mx-auto px-4 h-full flex flex-col justify-center items-start md:items-end text-left md:text-right">
           <div className="max-w-2xl p-8 rounded-2xl bg-white/80 backdrop-blur-md border border-slate-100 shadow-xl">
-            <h2 className="text-sm uppercase tracking-widest text-slate-500 mb-2">Tài Nguyên & Công Cụ</h2>
+            <h2 className="text-sm uppercase tracking-widest text-slate-500 mb-2 font-bold">LVH Design & Build</h2>
             <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 leading-tight mb-6">
               NÂNG TẦM <br /> BẢN VẼ
             </h1>
