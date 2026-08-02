@@ -86,20 +86,20 @@ export default async function OrderPage({ params }: OrderPageProps) {
                     DH{order.id.slice(-6).toUpperCase()}
                   </div>
                   
-                  {siteConfig?.bankQrCode ? (
-                    <div className="mt-6 text-center">
-                      <p className="text-sm font-medium text-slate-700 mb-3">Hoặc quét mã QR</p>
-                      <img 
-                        src={siteConfig.bankQrCode} 
-                        alt="Mã QR Thanh toán" 
-                        className="mx-auto w-64 h-64 object-contain border border-slate-200 rounded-xl p-2 bg-white shadow-sm" 
-                      />
-                    </div>
-                  ) : (siteConfig?.bankName && siteConfig?.bankAccountNumber) ? (
+                  {(siteConfig?.bankName && siteConfig?.bankAccountNumber) ? (
                     <div className="mt-6 text-center">
                       <p className="text-sm font-medium text-slate-700 mb-3">Hoặc quét mã QR (Đã tự động nhập số tiền)</p>
                       <img 
                         src={`https://img.vietqr.io/image/${siteConfig.bankName.replace(/\s+/g, '').toLowerCase()}-${siteConfig.bankAccountNumber}-compact2.png?amount=${order.totalAmount}&addInfo=DH${order.id.slice(-6).toUpperCase()}&accountName=${encodeURIComponent(siteConfig.bankAccountName || "")}`}
+                        alt="Mã VietQR Tự Động" 
+                        className="mx-auto w-64 h-64 object-contain border border-slate-200 rounded-xl p-2 bg-white shadow-sm" 
+                      />
+                    </div>
+                  ) : siteConfig?.bankQrCode ? (
+                    <div className="mt-6 text-center">
+                      <p className="text-sm font-medium text-slate-700 mb-3">Hoặc quét mã QR</p>
+                      <img 
+                        src={siteConfig.bankQrCode} 
                         alt="Mã QR Thanh toán" 
                         className="mx-auto w-64 h-64 object-contain border border-slate-200 rounded-xl p-2 bg-white shadow-sm" 
                       />
