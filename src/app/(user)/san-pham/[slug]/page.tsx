@@ -67,7 +67,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
           </div>
 
           <div className="text-3xl font-bold text-blue-600 mb-8">
-            ${product.price.toLocaleString("en-US")}
+            {product.price.toLocaleString("vi-VN")}đ
           </div>
 
           <p className="text-slate-600 text-lg leading-relaxed mb-8 whitespace-pre-wrap">

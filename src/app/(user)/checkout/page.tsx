@@ -124,7 +124,7 @@ export default function CheckoutPage() {
                   <div className="flex-1">
                     <h3 className="text-sm font-medium text-slate-900 line-clamp-2">{item.title}</h3>
                     <div className="text-sm font-medium text-slate-900 mt-1">
-                      ${item.price.toLocaleString()}
+                      {item.price.toLocaleString("vi-VN")}đ
                     </div>
                     <div className="flex items-center gap-4 mt-2">
                       <div className="flex items-center border border-slate-200 rounded-lg">
@@ -161,7 +161,7 @@ export default function CheckoutPage() {
             <div className="border-t border-slate-200 pt-4 mt-6">
               <div className="flex justify-between items-center text-lg font-bold text-slate-900">
                 <span>Tổng cộng:</span>
-                <span className="text-blue-600">${getCartTotal().toLocaleString()}</span>
+                <span className="text-blue-600">{getCartTotal().toLocaleString("vi-VN")}đ</span>
               </div>
             </div>
           </div>

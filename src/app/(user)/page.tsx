@@ -18,6 +18,10 @@ export default async function HomePage() {
     take: 8
   });
 
+  const categories = await prisma.category.findMany({
+    orderBy: { name: "asc" }
+  });
+
   return (
     <div className="flex flex-col gap-16 pb-16 bg-white">
       {/* Hero Section */}
@@ -31,16 +35,14 @@ export default async function HomePage() {
         
         <div className="container relative z-10 mx-auto px-4 h-full flex flex-col justify-center items-start md:items-end text-left md:text-right">
           <div className="max-w-2xl p-8 rounded-2xl bg-white/80 backdrop-blur-md border border-slate-100 shadow-xl">
-            <h2 className="text-sm uppercase tracking-widest text-slate-500 mb-2">Bộ Sưu Tập Mới</h2>
+            <h2 className="text-sm uppercase tracking-widest text-slate-500 mb-2">Tài Nguyên & Công Cụ</h2>
             <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 leading-tight mb-6">
-              NÂNG TẦM <br /> PHONG CÁCH
+              NÂNG TẦM <br /> BẢN VẼ
             </h1>
             <p className="text-lg text-slate-600 mb-8 max-w-md ml-auto">
-              Trải nghiệm sự kết hợp hoàn hảo giữa thiết kế thời trang cao cấp và công nghệ hiện đại.
+              Khám phá các khóa học thực chiến, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.
             </p>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-colors">
-              MUA SẮM NGAY
-            </button>
+
           </div>
         </div>
       </section>
@@ -49,13 +51,18 @@ export default async function HomePage() {
       <section className="container mx-auto px-4">
         <h3 className="text-2xl font-bold mb-8 text-slate-900">DANH MỤC SẢN PHẨM</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {["THỜI TRANG", "CÔNG NGHỆ", "PHỤ KIỆN"].map((cat) => (
-            <div key={cat} className="group relative h-48 rounded-2xl overflow-hidden cursor-pointer bg-slate-100 border border-slate-200 hover:border-blue-400 transition-colors">
+          {categories.map((cat) => (
+            <Link key={cat.id} href={`/san-pham?category=${cat.slug}`} className="group relative h-48 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 hover:border-blue-400 transition-colors">
               <div className="absolute inset-0 flex items-center justify-center z-20">
-                <span className="text-xl font-bold tracking-wider text-slate-800 group-hover:text-blue-600 group-hover:scale-105 transition-all">{cat}</span>
+                <span className="text-xl font-bold tracking-wider text-slate-800 uppercase group-hover:text-blue-600 group-hover:scale-105 transition-all">{cat.name}</span>
               </div>
-            </div>
+            </Link>
           ))}
+          {categories.length === 0 && (
+            <div className="col-span-full text-center py-8 text-slate-500">
+              Chưa có danh mục nào.
+            </div>
+          )}
         </div>
       </section>
 
@@ -93,7 +100,7 @@ export default async function HomePage() {
                 <h4 className="font-bold text-lg mb-1 text-slate-900 line-clamp-1">{product.title}</h4>
                 <p className="text-sm text-slate-500 mb-4 line-clamp-2">{product.description || "Chưa có mô tả"}</p>
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-xl text-slate-900">${product.price.toLocaleString("en-US")}</span>
+                  <span className="font-bold text-xl text-slate-900">{product.price.toLocaleString("vi-VN")}đ</span>
                   <HomeAddToCartButton 
                     product={{
                       id: product.id,
