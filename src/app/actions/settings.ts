@@ -48,8 +48,15 @@ export async function getSiteSettings() {
 
 export async function updateSiteSettingsAction(formData: FormData) {
   try {
-    const siteName = formData.get("siteName") as string;
-    const primaryColor = formData.get("primaryColor") as string;
+    const existing = await prisma.siteConfig.findUnique({ where: { id: "global" } });
+    
+    const siteName = (formData.get("siteName") as string) || "LVHUNGATC";
+    
+    let primaryColor = formData.get("primaryColor") as string;
+    if (!primaryColor || primaryColor === "null" || primaryColor === "undefined") {
+      primaryColor = existing?.primaryColor || "#2563eb";
+    }
+    
     const contactEmail = formData.get("contactEmail") as string;
     const contactPhone = formData.get("contactPhone") as string;
     const contactAddress = formData.get("contactAddress") as string;
@@ -58,7 +65,6 @@ export async function updateSiteSettingsAction(formData: FormData) {
     const bankAccountNumber = formData.get("bankAccountNumber") as string;
     const bankAccountName = formData.get("bankAccountName") as string;
     
-    const existing = await prisma.siteConfig.findUnique({ where: { id: "global" } });
     let heroImage = existing?.heroImage || null;
     let bankQrCode = existing?.bankQrCode || null;
 
@@ -115,8 +121,7 @@ export async function updateSiteSettingsAction(formData: FormData) {
       }
     });
 
-    revalidatePath("/");
-    revalidatePath("/dashboard/settings");
+    revalidatePath("/", "layout");
     
     return { success: true };
   } catch (error: any) {

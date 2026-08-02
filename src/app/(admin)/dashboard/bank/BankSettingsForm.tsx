@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { updateSiteSettingsAction } from "@/app/actions/settings";
 import { Loader2, CheckCircle2, Upload } from "lucide-react";
 
 export default function BankSettingsForm({ initialData }: { initialData: any }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,6 +39,7 @@ export default function BankSettingsForm({ initialData }: { initialData: any }) 
       setError(result.error);
     } else {
       setSuccess(true);
+      router.refresh();
       setTimeout(() => setSuccess(false), 3000);
     }
     setLoading(false);

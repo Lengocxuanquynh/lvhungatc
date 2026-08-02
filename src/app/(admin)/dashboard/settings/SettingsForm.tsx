@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { updateSiteSettingsAction } from "@/app/actions/settings";
 import { Loader2, CheckCircle2, Upload } from "lucide-react";
 
 export default function SettingsForm({ initialData }: { initialData: any }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,6 +38,7 @@ export default function SettingsForm({ initialData }: { initialData: any }) {
       setError(result.error);
     } else {
       setSuccess(true);
+      router.refresh();
       // Giữ thông báo success 3s
       setTimeout(() => setSuccess(false), 3000);
     }
@@ -57,10 +60,14 @@ export default function SettingsForm({ initialData }: { initialData: any }) {
         </div>
       )}
 
-      {/* Hidden inputs to preserve bank settings */}
+      {/* Hidden inputs to preserve bank and other settings */}
+      <input type="hidden" name="primaryColor" value={initialData?.primaryColor || "#2563eb"} />
       <input type="hidden" name="bankName" value={initialData?.bankName || ""} />
       <input type="hidden" name="bankAccountNumber" value={initialData?.bankAccountNumber || ""} />
       <input type="hidden" name="bankAccountName" value={initialData?.bankAccountName || ""} />
+      {initialData?.bankQrCode && (
+        <input type="hidden" name="bankQrCode" value={initialData.bankQrCode} />
+      )}
 
       <div className="space-y-6">
         <div>
