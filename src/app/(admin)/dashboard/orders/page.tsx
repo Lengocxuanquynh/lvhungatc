@@ -46,7 +46,7 @@ export default async function AdminOrdersPage() {
                   </td>
                 </tr>
               ) : (
-                orders.map((order) => (
+                orders.map((order: any) => (
                   <tr key={order.id} className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors">
                     <td className="py-4 px-6">
                       <span className="font-mono font-medium text-slate-900">

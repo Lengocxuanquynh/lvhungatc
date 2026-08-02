@@ -105,7 +105,7 @@ export default async function ProfilePage() {
               </div>
             ) : (
               <div className="space-y-6">
-                {orders.map((order) => (
+                {orders.map((order: any) => (
                   <div key={order.id} className="border border-slate-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
                     {/* Order Header */}
                     <div className="bg-slate-50 px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200">
