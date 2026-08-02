@@ -22,7 +22,7 @@ export async function createOrder(input: CreateOrderInput) {
       throw new Error("Giỏ hàng trống.");
     }
 
-    let customerEmail = input.customerEmail;
+    let finalCustomerEmail = customerEmail;
     const cookieStore = await cookies();
     const userId = cookieStore.get("user_session")?.value || cookieStore.get("admin_session")?.value;
 
@@ -32,7 +32,7 @@ export async function createOrder(input: CreateOrderInput) {
         select: { email: true }
       });
       if (user) {
-        customerEmail = user.email;
+        finalCustomerEmail = user.email;
       }
     }
 
@@ -41,7 +41,7 @@ export async function createOrder(input: CreateOrderInput) {
     const order = await prisma.order.create({
       data: {
         customerName,
-        customerEmail,
+        customerEmail: finalCustomerEmail,
         totalAmount,
         status: "PENDING",
         items: {
