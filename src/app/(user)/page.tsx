@@ -34,12 +34,12 @@ export default async function HomePage() {
         
         <div className="container relative z-10 mx-auto px-4 h-full flex flex-col justify-center items-start md:items-end text-left md:text-right">
           <div className="max-w-2xl p-8 rounded-2xl bg-white/80 backdrop-blur-md border border-slate-100 shadow-xl">
-            <h2 className="text-sm uppercase tracking-widest text-slate-500 mb-2">Sản Phẩm Chính Hãng</h2>
+            <h2 className="text-sm uppercase tracking-widest text-slate-500 mb-2">Tài Nguyên & Công Cụ</h2>
             <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 leading-tight mb-6">
-              MUA SẮM <br /> ĐẲNG CẤP
+              NÂNG TẦM <br /> BẢN VẼ
             </h1>
             <p className="text-lg text-slate-600 mb-8 max-w-md ml-auto">
-              Khám phá ngay hàng ngàn sản phẩm chất lượng cao với mức giá vô cùng ưu đãi. Nơi mang đến cho bạn những sự lựa chọn tuyệt vời nhất mỗi ngày.
+              Khám phá các khóa học thực chiến, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.
             </p>
             <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-colors">
               MUA SẮM NGAY
