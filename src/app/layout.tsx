@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: {
-      default: `${siteName} | Thư viện CAD & Khóa học Thực chiến`,
+      default: `${siteName} | Thư viện CAD & Công cụ Triển khai Nhanh`,
       template: `%s | ${siteName}`
     },
     description: "Khám phá các công cụ triển khai nhanh, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.",
@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: "vi_VN",
       url: "https://lvhungatc.vercel.app",
       siteName: siteName,
-      title: `${siteName} | Thư viện CAD & Khóa học Thực chiến`,
+      title: `${siteName} | Thư viện CAD & Công cụ Triển khai Nhanh`,
       description: "Khám phá các công cụ triển khai nhanh, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.",
       images: [
         {
@@ -36,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${siteName} | Thư viện CAD & Khóa học Thực chiến`,
+      title: `${siteName} | Thư viện CAD & Công cụ Triển khai Nhanh`,
       description: "Khám phá các công cụ triển khai nhanh, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.",
       images: [settings.heroImage || "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=1200"],
     },
