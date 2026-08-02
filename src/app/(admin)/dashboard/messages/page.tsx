@@ -28,7 +28,7 @@ export default async function AdminMessagesPage() {
           </div>
         ) : (
           <div className="divide-y divide-slate-100">
-            {messages.map((msg) => (
+            {messages.map((msg: any) => (
               <div key={msg.id} className={`p-6 transition-colors ${msg.isRead ? "bg-white" : "bg-blue-50/50"}`}>
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex items-center gap-3">
