@@ -50,8 +50,13 @@ export async function updateSiteSettingsAction(formData: FormData) {
   try {
     const existing = await prisma.siteConfig.findUnique({ where: { id: "global" } });
     
-    const siteName = formData.get("siteName") as string;
-    const primaryColor = (formData.get("primaryColor") as string) || existing?.primaryColor || "#2563eb";
+    const siteName = (formData.get("siteName") as string) || "LVHUNGATC";
+    
+    let primaryColor = formData.get("primaryColor") as string;
+    if (!primaryColor || primaryColor === "null" || primaryColor === "undefined") {
+      primaryColor = existing?.primaryColor || "#2563eb";
+    }
+    
     const contactEmail = formData.get("contactEmail") as string;
     const contactPhone = formData.get("contactPhone") as string;
     const contactAddress = formData.get("contactAddress") as string;

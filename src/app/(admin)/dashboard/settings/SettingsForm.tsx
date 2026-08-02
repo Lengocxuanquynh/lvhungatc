@@ -57,10 +57,14 @@ export default function SettingsForm({ initialData }: { initialData: any }) {
         </div>
       )}
 
-      {/* Hidden inputs to preserve bank settings */}
+      {/* Hidden inputs to preserve bank and other settings */}
+      <input type="hidden" name="primaryColor" value={initialData?.primaryColor || "#2563eb"} />
       <input type="hidden" name="bankName" value={initialData?.bankName || ""} />
       <input type="hidden" name="bankAccountNumber" value={initialData?.bankAccountNumber || ""} />
       <input type="hidden" name="bankAccountName" value={initialData?.bankAccountName || ""} />
+      {initialData?.bankQrCode && (
+        <input type="hidden" name="bankQrCode" value={initialData.bankQrCode} />
+      )}
 
       <div className="space-y-6">
         <div>
