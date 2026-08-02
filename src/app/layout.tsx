@@ -63,7 +63,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${plusJakartaSans.className} antialiased`}>{children}</body>
+      <body suppressHydrationWarning className={`${plusJakartaSans.className} antialiased`}>{children}</body>
     </html>
   );
 }
