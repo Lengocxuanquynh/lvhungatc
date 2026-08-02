@@ -62,7 +62,7 @@ export default async function AdminOrdersPage() {
                     </td>
                     <td className="py-4 px-6">
                       <ul className="text-sm space-y-1">
-                        {order.items.map(item => (
+                        {order.items.map((item: any) => (
                           <li key={item.id} className="text-slate-700 line-clamp-1" title={item.product.title}>
                             - {item.product.title} (x{item.quantity})
                           </li>
