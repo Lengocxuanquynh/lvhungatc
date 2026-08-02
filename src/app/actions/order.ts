@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { sendOrderCompletedEmail } from "@/lib/email";
 
 interface CreateOrderInput {
   customerName: string;
@@ -61,12 +62,37 @@ export async function createOrder(input: CreateOrderInput) {
   }
 }
 
+
+
 export async function updateOrderStatus(orderId: string, status: "PENDING" | "PAID" | "CANCELLED") {
   try {
-    await prisma.order.update({
+    const updatedOrder = await prisma.order.update({
       where: { id: orderId },
-      data: { status }
+      data: { status },
+      include: {
+        items: {
+          include: {
+            product: true
+          }
+        }
+      }
     });
+
+    if (status === "PAID") {
+      const productsList = updatedOrder.items.map(item => ({
+        title: item.product.title,
+        downloadUrl: item.product.downloadUrl
+      }));
+      
+      // Send the email in the background or await it
+      await sendOrderCompletedEmail(
+        updatedOrder.customerEmail,
+        updatedOrder.customerName,
+        updatedOrder.id,
+        productsList
+      );
+    }
+
     revalidatePath("/dashboard/orders");
     revalidatePath(`/order/${orderId}`);
     return { success: true };
