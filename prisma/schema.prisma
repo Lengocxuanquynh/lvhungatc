@@ -27,6 +27,12 @@ enum Role {
   ADMIN
 }
 
+enum OrderStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
 model Category {
   id          String    @id @default(cuid())
   name        String
@@ -52,6 +58,9 @@ model Product {
   metaTitle       String?
   metaDescription String?  @db.Text
   
+  // Download Link (for digital products)
+  downloadUrl     String?
+
   published       Boolean  @default(false)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -61,4 +70,53 @@ model Product {
   author          User     @relation(fields: [authorId], references: [id])
   categoryId      String
   category        Category @relation(fields: [categoryId], references: [id])
+  orderItems      OrderItem[]
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  customerName  String
+  customerEmail String
+  status        OrderStatus @default(PENDING)
+  totalAmount   Float
+  
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  price     Float
+  quantity  Int     @default(1)
+
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model SiteConfig {
+  id           String @id @default("global")
+  siteName       String  @default("LVHUNGATC")
+  primaryColor   String  @default("#2563eb")
+  heroImage      String?
+  contactEmail   String? @default("support@lvhungatc.com")
+  contactPhone   String? @default("0123 456 789")
+  contactAddress String? @default("123 Đường ABC, Quận XYZ, TP.HCM")
+  bankName          String?
+  bankAccountNumber String?
+  bankAccountName   String?
+  bankQrCode        String?
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
 }

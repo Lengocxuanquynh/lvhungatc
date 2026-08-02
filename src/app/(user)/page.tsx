@@ -1,55 +1,32 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { Star } from "lucide-react";
 
-const PRODUCTS = [
-  {
-    id: "1",
-    title: "Đồng hồ AURA CHRONOS",
-    desc: "Vỏ kính cao cấp với cơ chế cơ học chính xác.",
-    price: 1499.00,
-    badge: "Mới",
-    rating: 5,
-    img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: "2",
-    title: "Tai nghe NEBULA X",
-    desc: "Trải nghiệm sự kết hợp giữa thiết kế thời trang và âm thanh đỉnh cao.",
-    price: 599.00,
-    badge: "Mới",
-    rating: 5,
-    img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: "3",
-    title: "Áo da ORION",
-    desc: "Chất liệu da cao cấp được thiết kế riêng mang lại sự thoải mái.",
-    price: 2200.00,
-    badge: "Mới",
-    rating: 5,
-    img: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: "4",
-    title: "Điện thoại STELLAR",
-    desc: "Phiên bản 7 nổi bật với màn hình tràn viền hoàn hảo.",
-    price: 1850.00,
-    badge: "Mới",
-    rating: 5,
-    img: "https://images.unsplash.com/photo-1598327105666-5b89351cb315?auto=format&fit=crop&q=80&w=800",
-  },
-];
+import { getSiteSettings } from "@/app/actions/settings";
+import { prisma } from "@/lib/prisma";
+import Link from "next/link";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const settings = await getSiteSettings();
+  const heroImage = settings.heroImage || "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=2000";
+
+  // Fetch real products from database
+  const products = await prisma.product.findMany({
+    where: { published: true },
+    orderBy: { createdAt: "desc" },
+    take: 8
+  });
+
   return (
     <div className="flex flex-col gap-16 pb-16 bg-white">
       {/* Hero Section */}
       <section className="relative w-full h-[600px] bg-slate-50 overflow-hidden">
         {/* Light gradient for hero background */}
         <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent z-0" />
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center opacity-30 z-0" />
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-30 z-0" 
+          style={{ backgroundImage: `url('${heroImage}')` }}
+        />
         
         <div className="container relative z-10 mx-auto px-4 h-full flex flex-col justify-center items-start md:items-end text-left md:text-right">
           <div className="max-w-2xl p-8 rounded-2xl bg-white/80 backdrop-blur-md border border-slate-100 shadow-xl">
@@ -83,14 +60,19 @@ export default function HomePage() {
 
       {/* Featured Products */}
       <section className="container mx-auto px-4">
-        <h3 className="text-2xl font-bold mb-8 text-slate-900">SẢN PHẨM NỔI BẬT</h3>
+        <div className="flex justify-between items-center mb-8">
+          <h3 className="text-2xl font-bold text-slate-900">SẢN PHẨM NỔI BẬT</h3>
+          <Link href="/san-pham" className="text-sm font-bold text-blue-600 hover:text-blue-700 hover:underline">
+            Tất cả sản phẩm &rarr;
+          </Link>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {PRODUCTS.map((product) => (
-            <div key={product.id} className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col group hover:shadow-xl transition-shadow">
+          {products.map((product) => (
+            <Link href={`/san-pham/${product.slug}`} key={product.id} className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col group hover:shadow-xl transition-shadow cursor-pointer">
               <div className="flex justify-between items-start mb-4">
-                <span className="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">{product.badge}</span>
+                <span className="bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">Mới</span>
                 <div className="flex text-amber-400">
-                  {[...Array(product.rating)].map((_, i) => (
+                  {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-3 h-3 fill-current" />
                   ))}
                 </div>
@@ -98,25 +80,31 @@ export default function HomePage() {
               
               <div className="relative w-full h-56 mb-6 rounded-xl overflow-hidden bg-slate-50 border border-slate-100">
                 <Image 
-                  src={product.img} 
+                  src={product.images[0] || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800"} 
                   alt={product.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
 
               <div className="mt-auto">
-                <h4 className="font-bold text-lg mb-1 text-slate-900">{product.title}</h4>
-                <p className="text-sm text-slate-500 mb-4 line-clamp-2">{product.desc}</p>
+                <h4 className="font-bold text-lg mb-1 text-slate-900 line-clamp-1">{product.title}</h4>
+                <p className="text-sm text-slate-500 mb-4 line-clamp-2">{product.description || "Chưa có mô tả"}</p>
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-xl text-slate-900">${product.price.toFixed(2)}</span>
+                  <span className="font-bold text-xl text-slate-900">${product.price.toLocaleString("en-US")}</span>
                   <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded-full transition-colors">
                     THÊM VÀO GIỎ
                   </button>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
+          {products.length === 0 && (
+            <div className="col-span-full text-center py-12 text-slate-500">
+              Chưa có sản phẩm nào được đăng bán.
+            </div>
+          )}
         </div>
       </section>
     </div>
