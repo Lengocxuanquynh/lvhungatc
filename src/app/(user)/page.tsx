@@ -5,6 +5,7 @@ import { Star } from "lucide-react";
 import { getSiteSettings } from "@/app/actions/settings";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import HomeAddToCartButton from "@/components/HomeAddToCartButton";
 
 export default async function HomePage() {
   const settings = await getSiteSettings();
@@ -93,9 +94,14 @@ export default async function HomePage() {
                 <p className="text-sm text-slate-500 mb-4 line-clamp-2">{product.description || "Chưa có mô tả"}</p>
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-xl text-slate-900">${product.price.toLocaleString("en-US")}</span>
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded-full transition-colors">
-                    THÊM VÀO GIỎ
-                  </button>
+                  <HomeAddToCartButton 
+                    product={{
+                      id: product.id,
+                      title: product.title,
+                      price: product.price,
+                      image: product.images[0]
+                    }} 
+                  />
                 </div>
               </div>
             </Link>
