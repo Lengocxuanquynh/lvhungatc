@@ -146,7 +146,7 @@ export default async function ProfilePage() {
                     {/* Order Items */}
                     <div className="p-6">
                       <div className="space-y-4">
-                        {order.items.map((item) => (
+                        {order.items.map((item: any) => (
                           <div key={item.id} className="flex gap-4 items-center">
                             <div className="relative w-16 h-16 rounded-lg bg-slate-50 border border-slate-100 overflow-hidden shrink-0">
                               {item.product.images && item.product.images[0] ? (
