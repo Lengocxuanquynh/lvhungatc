@@ -154,6 +154,15 @@ export async function updateProductAction(id: string, formData: FormData) {
 export async function deleteProductAction(id: string) {
   try {
     await getAdminId(); // Ensure admin
+    
+    const orderItemsCount = await prisma.orderItem.count({
+      where: { productId: id }
+    });
+    
+    if (orderItemsCount > 0) {
+      return { error: `Không thể xoá sản phẩm này vì nó đã được đặt mua trong ${orderItemsCount} đơn hàng.` };
+    }
+
     await prisma.product.delete({
       where: { id }
     });
@@ -161,7 +170,7 @@ export async function deleteProductAction(id: string) {
     return { success: true };
   } catch (error: any) {
     console.error("Lỗi xoá sản phẩm:", error);
-    return { error: "Không thể xoá sản phẩm" };
+    return { error: "Không thể xoá sản phẩm do lỗi hệ thống" };
   }
 }
 

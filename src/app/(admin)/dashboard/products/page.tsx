@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import { prisma } from "@/lib/prisma";
-import { deleteProductAction } from "@/app/actions/product";
+import DeleteProductButton from "./DeleteProductButton";
 
 export default async function ProductsPage() {
   const products = await prisma.product.findMany({
@@ -58,14 +58,7 @@ export default async function ProductsPage() {
                       <Link href={`/dashboard/products/${product.id}`} className="p-2 text-slate-400 hover:text-blue-600 transition-colors bg-white border border-slate-200 rounded-lg shadow-sm">
                         <Edit className="w-4 h-4" />
                       </Link>
-                      <form action={async () => {
-                        "use server";
-                        await deleteProductAction(product.id);
-                      }}>
-                        <button type="submit" className="p-2 text-slate-400 hover:text-red-600 transition-colors bg-white border border-slate-200 rounded-lg shadow-sm">
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </form>
+                      <DeleteProductButton id={product.id} />
                     </div>
                   </td>
                 </tr>

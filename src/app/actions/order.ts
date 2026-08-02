@@ -75,3 +75,20 @@ export async function updateOrderStatus(orderId: string, status: "PENDING" | "PA
     return { error: "Không thể cập nhật đơn hàng" };
   }
 }
+
+export async function deleteOrderAction(orderId: string) {
+  try {
+    const cookieStore = await cookies();
+    const adminId = cookieStore.get("admin_session")?.value;
+    if (!adminId) throw new Error("Chưa đăng nhập quyền quản trị");
+
+    await prisma.order.delete({
+      where: { id: orderId }
+    });
+    revalidatePath("/dashboard/orders");
+    return { success: true };
+  } catch (error: any) {
+    console.error("Lỗi xoá đơn hàng:", error);
+    return { error: "Không thể xoá đơn hàng do lỗi hệ thống" };
+  }
+}
