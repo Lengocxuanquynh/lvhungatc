@@ -18,6 +18,13 @@ export default function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/admin/login', request.url));
   }
 
+  const isCheckoutRoute = request.nextUrl.pathname.startsWith('/checkout');
+  const hasUserCookie = request.cookies.has('user_session');
+
+  if (isCheckoutRoute && !hasUserCookie) {
+    return NextResponse.redirect(new URL('/dang-nhap', request.url));
+  }
+
   return NextResponse.next();
 }
 
