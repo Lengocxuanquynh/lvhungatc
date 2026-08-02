@@ -191,3 +191,41 @@ export async function logoutAction() {
   cookieStore.delete("user_session");
   redirect("/dang-nhap");
 }
+
+export async function updateAdminAccountAction(formData: FormData) {
+  try {
+    const cookieStore = await cookies();
+    const adminId = cookieStore.get("admin_session")?.value;
+    
+    if (!adminId) {
+      return { error: "Bạn chưa đăng nhập với quyền admin!" };
+    }
+    
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    
+    if (!email) {
+      return { error: "Email không được để trống!" };
+    }
+    
+    const updateData: any = { email };
+    
+    if (password && password.trim() !== "") {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      updateData.password = hashedPassword;
+    }
+    
+    await prisma.user.update({
+      where: { id: adminId },
+      data: updateData
+    });
+    
+    return { success: true };
+  } catch (error: any) {
+    console.error("Lỗi cập nhật tài khoản admin:", error);
+    if (error.code === 'P2002') {
+      return { error: "Email này đã được sử dụng!" };
+    }
+    return { error: "Không thể lưu cài đặt. Vui lòng thử lại sau." };
+  }
+}
