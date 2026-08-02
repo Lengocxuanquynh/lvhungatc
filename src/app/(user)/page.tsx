@@ -41,9 +41,7 @@ export default async function HomePage() {
             <p className="text-lg text-slate-600 mb-8 max-w-md ml-auto">
               Khám phá các khóa học thực chiến, thư viện CAD khổng lồ và bộ Lisp chuyên dụng giúp bạn tối ưu hóa 100% hiệu suất thiết kế.
             </p>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-colors">
-              MUA SẮM NGAY
-            </button>
+
           </div>
         </div>
       </section>
