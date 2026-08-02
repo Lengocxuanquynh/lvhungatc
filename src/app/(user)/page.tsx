@@ -17,6 +17,10 @@ export default async function HomePage() {
     take: 8
   });
 
+  const categories = await prisma.category.findMany({
+    orderBy: { name: "asc" }
+  });
+
   return (
     <div className="flex flex-col gap-16 pb-16 bg-white">
       {/* Hero Section */}
@@ -48,13 +52,18 @@ export default async function HomePage() {
       <section className="container mx-auto px-4">
         <h3 className="text-2xl font-bold mb-8 text-slate-900">DANH MỤC SẢN PHẨM</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {["THỜI TRANG", "CÔNG NGHỆ", "PHỤ KIỆN"].map((cat) => (
-            <div key={cat} className="group relative h-48 rounded-2xl overflow-hidden cursor-pointer bg-slate-100 border border-slate-200 hover:border-blue-400 transition-colors">
+          {categories.map((cat) => (
+            <Link key={cat.id} href={`/san-pham?category=${cat.slug}`} className="group relative h-48 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 hover:border-blue-400 transition-colors">
               <div className="absolute inset-0 flex items-center justify-center z-20">
-                <span className="text-xl font-bold tracking-wider text-slate-800 group-hover:text-blue-600 group-hover:scale-105 transition-all">{cat}</span>
+                <span className="text-xl font-bold tracking-wider text-slate-800 uppercase group-hover:text-blue-600 group-hover:scale-105 transition-all">{cat.name}</span>
               </div>
-            </div>
+            </Link>
           ))}
+          {categories.length === 0 && (
+            <div className="col-span-full text-center py-8 text-slate-500">
+              Chưa có danh mục nào.
+            </div>
+          )}
         </div>
       </section>
 
