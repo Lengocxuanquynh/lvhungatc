@@ -28,7 +28,6 @@ export default async function ProfilePage() {
     redirect("/dang-nhap");
   }
 
-  // Fetch orders based on user's email
   const orders = await prisma.order.findMany({
     where: { customerEmail: user.email },
     orderBy: { createdAt: 'desc' },
@@ -40,6 +39,9 @@ export default async function ProfilePage() {
       }
     }
   });
+
+  const pendingOrders = orders.filter((o: any) => o.status === "PENDING");
+  const completedOrders = orders.filter((o: any) => o.status !== "PENDING");
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-5xl">
@@ -90,12 +92,81 @@ export default async function ProfilePage() {
 
         {/* Orders List */}
         <div className="w-full md:w-2/3">
+          {/* Pending Orders List */}
+          {pendingOrders.length > 0 && (
+            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm mb-8">
+              <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                <Clock className="w-6 h-6 text-amber-500" /> Đơn hàng cần thanh toán
+              </h2>
+              <div className="space-y-6">
+                {pendingOrders.map((order: any) => (
+                  <div key={order.id} className="border border-amber-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
+                    {/* Order Header */}
+                    <div className="bg-amber-50 px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-amber-200">
+                      <div>
+                        <div className="text-sm text-slate-500 mb-1">
+                          Đơn hàng <span className="font-bold text-slate-900">#{order.id.slice(-6).toUpperCase()}</span>
+                        </div>
+                        <div className="text-sm text-slate-500">
+                          {new Date(order.createdAt).toLocaleDateString('vi-VN', {
+                            hour: '2-digit', minute: '2-digit'
+                          })}
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-4">
+                        <span className="font-bold text-slate-900">
+                          {order.totalAmount.toLocaleString("vi-VN")}đ
+                        </span>
+                        <span className="flex items-center gap-1.5 bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-bold">
+                          <Clock className="w-3.5 h-3.5" /> Chờ thanh toán
+                        </span>
+                        <Link href={`/order/${order.id}`} className="text-sm font-medium text-amber-600 hover:underline">
+                          Thanh toán ngay &rarr;
+                        </Link>
+                      </div>
+                    </div>
+                    
+                    {/* Order Items */}
+                    <div className="p-6">
+                      <div className="space-y-4">
+                        {order.items.map((item: any) => (
+                          <div key={item.id} className="flex gap-4 items-center">
+                            <div className="relative w-16 h-16 rounded-lg bg-slate-50 border border-slate-100 overflow-hidden shrink-0">
+                              {item.product.images && item.product.images[0] ? (
+                                <Image src={item.product.images[0]} alt={item.product.title} fill className="object-contain" />
+                              ) : (
+                                <Package className="w-6 h-6 text-slate-300 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                              )}
+                            </div>
+                            <div className="flex-1">
+                              <Link href={`/san-pham/${item.product.slug}`} className="font-medium text-slate-900 hover:text-blue-600 transition-colors line-clamp-1">
+                                {item.product.title}
+                              </Link>
+                              <div className="text-sm text-slate-500 mt-1">
+                                Số lượng: {item.quantity}
+                              </div>
+                            </div>
+                            <div className="font-medium text-slate-900">
+                              {item.price.toLocaleString("vi-VN")}đ
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Completed Orders List */}
           <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
             <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
               <Package className="w-6 h-6 text-blue-600" /> Đơn hàng đã mua
             </h2>
 
-            {orders.length === 0 ? (
+            {completedOrders.length === 0 ? (
               <div className="text-center py-12 bg-slate-50 rounded-xl border border-slate-100 mt-4">
                 <Package className="w-12 h-12 text-slate-300 mx-auto mb-3" />
                 <p className="text-slate-500 font-medium">Bạn chưa có đơn hàng nào.</p>
@@ -105,7 +176,7 @@ export default async function ProfilePage() {
               </div>
             ) : (
               <div className="space-y-6">
-                {orders.map((order: any) => (
+                {completedOrders.map((order: any) => (
                   <div key={order.id} className="border border-slate-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
                     {/* Order Header */}
                     <div className="bg-slate-50 px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200">
@@ -127,10 +198,6 @@ export default async function ProfilePage() {
                         {order.status === "PAID" ? (
                           <span className="flex items-center gap-1.5 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">
                             <CheckCircle2 className="w-3.5 h-3.5" /> Đã thanh toán
-                          </span>
-                        ) : order.status === "PENDING" ? (
-                          <span className="flex items-center gap-1.5 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">
-                            <Clock className="w-3.5 h-3.5" /> Chờ thanh toán
                           </span>
                         ) : (
                           <span className="flex items-center gap-1.5 bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold">

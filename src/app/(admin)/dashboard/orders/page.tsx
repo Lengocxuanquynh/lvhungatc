@@ -74,17 +74,17 @@ export default async function AdminOrdersPage() {
                     </td>
                     <td className="py-4 px-6">
                       {order.status === "PENDING" && (
-                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
+                        <span className="whitespace-nowrap px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
                           Chờ thanh toán
                         </span>
                       )}
                       {order.status === "PAID" && (
-                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                        <span className="whitespace-nowrap px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
                           Đã thanh toán
                         </span>
                       )}
                       {order.status === "CANCELLED" && (
-                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                        <span className="whitespace-nowrap px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
                           Đã hủy
                         </span>
                       )}
