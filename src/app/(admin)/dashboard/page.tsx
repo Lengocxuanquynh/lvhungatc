@@ -7,9 +7,12 @@ export default async function AdminDashboardPage() {
   const productsCount = await prisma.product.count();
   const usersCount = await prisma.user.count({ where: { role: 'USER' } });
   
-  // Tính tổng số tiền giả lập hoặc nếu có đơn hàng thật thì tính
-  // Hiện tại chưa có Order model nên ta cứ để 0
-  const totalRevenue = 0;
+  // Tính tổng số tiền từ các đơn hàng đã thanh toán
+  const paidOrders = await prisma.order.findMany({
+    where: { status: 'PAID' },
+    select: { totalAmount: true }
+  });
+  const totalRevenue = paidOrders.reduce((sum, order) => sum + order.totalAmount, 0);
 
   const recentProducts = await prisma.product.findMany({
     orderBy: { createdAt: 'desc' },
@@ -43,7 +46,7 @@ export default async function AdminDashboardPage() {
             </div>
           </div>
           <div className="flex items-end gap-2">
-            <span className="text-3xl font-bold text-slate-900">${totalRevenue}</span>
+            <span className="text-3xl font-bold text-slate-900">{totalRevenue.toLocaleString("vi-VN")}đ</span>
             <span className="text-sm font-medium text-emerald-600 flex items-center gap-1">
               --
             </span>
