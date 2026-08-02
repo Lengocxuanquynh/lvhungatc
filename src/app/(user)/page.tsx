@@ -101,7 +101,7 @@ export default async function HomePage() {
                 <h4 className="font-bold text-lg mb-1 text-slate-900 line-clamp-1">{product.title}</h4>
                 <p className="text-sm text-slate-500 mb-4 line-clamp-2">{product.description || "Chưa có mô tả"}</p>
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-xl text-slate-900">${product.price.toLocaleString("en-US")}</span>
+                  <span className="font-bold text-xl text-slate-900">{product.price.toLocaleString("vi-VN")}đ</span>
                   <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded-full transition-colors">
                     THÊM VÀO GIỎ
                   </button>

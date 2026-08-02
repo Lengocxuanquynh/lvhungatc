@@ -43,7 +43,7 @@ export default async function AdminDashboardPage() {
             </div>
           </div>
           <div className="flex items-end gap-2">
-            <span className="text-3xl font-bold text-slate-900">${totalRevenue}</span>
+            <span className="text-3xl font-bold text-slate-900">{totalRevenue.toLocaleString("vi-VN")}đ</span>
             <span className="text-sm font-medium text-emerald-600 flex items-center gap-1">
               --
             </span>

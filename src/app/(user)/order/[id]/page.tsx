@@ -79,7 +79,7 @@ export default async function OrderPage({ params }: OrderPageProps) {
                 </div>
                 <div className="bg-white p-4 rounded-lg border border-slate-200">
                   <p className="text-sm text-slate-500 mb-1">Số tiền cần chuyển</p>
-                  <p className="font-bold text-blue-600 text-2xl">${order.totalAmount.toLocaleString()}</p>
+                  <p className="font-bold text-blue-600 text-2xl">{order.totalAmount.toLocaleString("vi-VN")}đ</p>
                   
                   <p className="text-sm text-slate-500 mb-1 mt-4">Nội dung chuyển khoản (Bắt buộc)</p>
                   <div className="bg-slate-100 p-3 rounded font-mono text-center text-lg font-bold text-slate-800 tracking-wider">
@@ -121,7 +121,7 @@ export default async function OrderPage({ params }: OrderPageProps) {
                 <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between p-4 bg-white border border-slate-200 rounded-xl gap-4">
                   <div>
                     <h3 className="font-medium text-slate-900">{item.product.title}</h3>
-                    <p className="text-sm text-slate-500 mt-1">${item.price.toLocaleString()} x {item.quantity}</p>
+                    <p className="text-sm text-slate-500 mt-1">{item.price.toLocaleString("vi-VN")}đ x {item.quantity}</p>
                   </div>
                   
                   {isPaid ? (

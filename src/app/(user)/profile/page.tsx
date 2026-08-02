@@ -122,7 +122,7 @@ export default async function ProfilePage() {
                       
                       <div className="flex items-center gap-4">
                         <span className="font-bold text-slate-900">
-                          ${order.totalAmount.toLocaleString()}
+                          {order.totalAmount.toLocaleString("vi-VN")}đ
                         </span>
                         {order.status === "PAID" ? (
                           <span className="flex items-center gap-1.5 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">
@@ -164,7 +164,7 @@ export default async function ProfilePage() {
                               </div>
                             </div>
                             <div className="font-medium text-slate-900">
-                              ${item.price.toLocaleString()}
+                              {item.price.toLocaleString("vi-VN")}đ
                             </div>
                           </div>
                         ))}

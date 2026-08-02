@@ -70,7 +70,7 @@ export default async function AdminOrdersPage() {
                       </ul>
                     </td>
                     <td className="py-4 px-6 font-bold text-blue-600">
-                      ${order.totalAmount.toLocaleString()}
+                      {order.totalAmount.toLocaleString("vi-VN")}đ
                     </td>
                     <td className="py-4 px-6">
                       {order.status === "PENDING" && (

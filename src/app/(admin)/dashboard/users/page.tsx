@@ -79,7 +79,7 @@ export default async function AdminUsersPage() {
                       {customer.orderCount}
                     </td>
                     <td className="py-4 px-6 font-bold text-blue-600">
-                      ${customer.totalSpent.toLocaleString()}
+                      {customer.totalSpent.toLocaleString("vi-VN")}đ
                     </td>
                     <td className="py-4 px-6 text-sm text-slate-500">
                       {customer.lastOrder.toLocaleDateString('vi-VN')}
